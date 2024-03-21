@@ -11,7 +11,7 @@ import SwiftUI
 struct eBay2_0App: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            TabBarView()
         }
     }
 }
