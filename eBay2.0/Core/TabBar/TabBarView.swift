@@ -9,6 +9,8 @@ import SwiftUI
 
 struct TabBarView: View {
     @State private var selectedIndex = 0
+    
+    @StateObject var viewModel = TabBarViewViewModel()
 
     
     var body: some View {
@@ -39,7 +41,7 @@ struct TabBarView: View {
               }
               .tag(3)
             
-            ProfileView()
+            ProfileView(user: viewModel.currentUser)
               .tabItem {
                 Image(systemName: "person")
               }

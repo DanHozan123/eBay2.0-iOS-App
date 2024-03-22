@@ -21,7 +21,7 @@ struct HomeView: View {
         NavigationStack {
             ScrollView {
                 LazyVGrid(columns: gridItems, spacing: 5) {
-                    ForEach(Category.categories, id: \.self) { category in
+                    ForEach(Category.hardcodedProductCategories, id: \.self) { category in
                         NavigationLink(destination: ProductsView(category: category), label: {
                             VStack {
                                 Image(category.imagePath)

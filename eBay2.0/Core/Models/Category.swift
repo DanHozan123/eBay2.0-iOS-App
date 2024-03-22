@@ -8,19 +8,22 @@
 import Foundation
 import SwiftUI
 
-enum ProductCategory: Codable {
-    case AutomobilesAndMotorcycles
-    case Books
-    case CellPhonesAndAccessories
-    case ComputersAndITAccessories
-    case HandWatches
-    case Jewellery
-    case Medicine
-    case Furniture
-    case MensClothingAndAccessory
-    case TablewareAndKitchenware
-    case VideoGamesAndConsoles
-    case WomensClothingAndAccessory
+import Foundation
+import SwiftUI
+
+enum ProductCategory: String, Codable {
+    case automobilesAndMotorcycles = "Automobiles & Motorcycles"
+    case books = "Books"
+    case cellPhonesAndAccessories = "Cell Phones & Accessories"
+    case computersAndITAccessories = "Computers & IT Accessories"
+    case handWatches = "Hand Watches"
+    case jewellery = "Jewellery"
+    case medicine = "Medicine"
+    case furniture = "Furniture"
+    case mensClothingAndAccessory = "Men's Clothing & Accessory"
+    case tablewareAndKitchenware = "Tableware & Kitchenware"
+    case videoGamesAndConsoles = "Video Games & Consoles"
+    case womensClothingAndAccessory = "Women's Clothing & Accessory"
 }
 
 struct Category: Hashable {
@@ -31,16 +34,65 @@ struct Category: Hashable {
 }
 
 extension Category {
-    static let categories: [Category] = [Category(title: "Automobiles & Motorcycles", imagePath: "Automobiles & Motorcycles", color: .pink, category: .AutomobilesAndMotorcycles),
-                                         Category(title: "Books", imagePath: "Books", color: .mint, category: .Books),
-                                         Category(title: "Cell Phones & Accessories", imagePath: "Cell Phones & Accessories", color: .red, category: .CellPhonesAndAccessories),
-                                         Category(title: "Computers & IT Accessories", imagePath: "Computers & IT Accessories", color: .yellow, category: .ComputersAndITAccessories),
-                                         Category(title: "Hand Watches", imagePath: "Hand Watches", color: .cyan, category: .HandWatches),
-                                         Category(title: "Jewellery", imagePath: "Jewellery", color: .brown, category: .Jewellery),
-                                         Category(title: "Medicine", imagePath: "Medicine", color: .orange, category: .Medicine),
-                                         Category(title: "Furniture", imagePath: "Furniture", color: .blue, category: .Furniture),
-                                         Category(title: "Men's Clothing & Accessory", imagePath: "Men's Clothing & Accessory", color: .green, category: .MensClothingAndAccessory),
-                                         Category(title: "Tableware & Kitchenware", imagePath: "Tableware & Kitchenware", color: .pink, category: .TablewareAndKitchenware),
-                                         Category(title: "Video Games & Consoles", imagePath: "Video Games & Consoles", color: .mint, category: .VideoGamesAndConsoles),
-                                         Category(title: "Women's Clothing & Accessory", imagePath: "Women's Clothing & Accessory", color: .red, category: .WomensClothingAndAccessory)]
+    static let hardcodedProductCategories: [Category] = [
+        
+        Category(title: ProductCategory.automobilesAndMotorcycles.rawValue,
+                 imagePath: ProductCategory.automobilesAndMotorcycles.rawValue,
+                 color: .pink,
+                 category: .automobilesAndMotorcycles),
+        
+        Category(title: ProductCategory.books.rawValue,
+                 imagePath: ProductCategory.books.rawValue,
+                 color: .mint,
+                 category: .books),
+        
+        Category(title: ProductCategory.cellPhonesAndAccessories.rawValue,
+                 imagePath: ProductCategory.cellPhonesAndAccessories.rawValue,
+                 color: .red, category: .cellPhonesAndAccessories),
+        
+        Category(title: ProductCategory.computersAndITAccessories.rawValue,
+                 imagePath: ProductCategory.computersAndITAccessories.rawValue,
+                 color: .yellow,
+                 category: .computersAndITAccessories),
+        
+        Category(title: ProductCategory.handWatches.rawValue,
+                 imagePath: ProductCategory.handWatches.rawValue,
+                 color: .cyan,
+                 category: .handWatches),
+        
+        Category(title: ProductCategory.jewellery.rawValue,
+                 imagePath: ProductCategory.jewellery.rawValue,
+                 color: .brown,
+                 category: .jewellery),
+        
+        Category(title: ProductCategory.medicine.rawValue,
+                 imagePath: ProductCategory.medicine.rawValue,
+                 color: .orange,
+                 category: .medicine),
+        
+        Category(title: ProductCategory.furniture.rawValue,
+                 imagePath: ProductCategory.furniture.rawValue,
+                 color: .blue,
+                 category: .furniture),
+        
+        Category(title: ProductCategory.mensClothingAndAccessory.rawValue,
+                 imagePath: ProductCategory.mensClothingAndAccessory.rawValue,
+                 color: .green,
+                 category: .mensClothingAndAccessory),
+        
+        Category(title: ProductCategory.tablewareAndKitchenware.rawValue,
+                 imagePath: ProductCategory.tablewareAndKitchenware.rawValue,
+                 color: .pink,
+                 category: .tablewareAndKitchenware),
+        
+        Category(title: ProductCategory.videoGamesAndConsoles.rawValue,
+                 imagePath: ProductCategory.videoGamesAndConsoles.rawValue,
+                 color: .mint,
+                 category: .videoGamesAndConsoles),
+        
+        Category(title: ProductCategory.womensClothingAndAccessory.rawValue,
+                 imagePath: ProductCategory.womensClothingAndAccessory.rawValue,
+                 color: .red,
+                 category: .womensClothingAndAccessory)
+    ]
 }
