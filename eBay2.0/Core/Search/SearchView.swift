@@ -8,13 +8,20 @@
 import SwiftUI
 
 struct SearchView: View {
+    
+    var user: User?
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        
+        VStack{
+            Text(user?.fullname ?? "Guest User")
+        }
+        
     }
 }
 
 struct SearchView_Previews: PreviewProvider {
     static var previews: some View {
-        SearchView()
+        SearchView(user: User.MOCK_DATA)
     }
 }

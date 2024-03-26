@@ -13,6 +13,7 @@ struct TabBarView: View {
     @StateObject var viewModel = TabBarViewViewModel()
 
     
+    
     var body: some View {
         
         TabView(selection: $selectedIndex) {
@@ -23,7 +24,7 @@ struct TabBarView: View {
                }
                .tag(0)
 
-             SearchView()
+            SearchView(user: viewModel.currentUser)
                .tabItem {
                  Image(systemName: "magnifyingglass")
                }
@@ -46,9 +47,11 @@ struct TabBarView: View {
                 Image(systemName: "person")
               }
               .tag(4)
-        
-           }
-           .accentColor(.black)
+              
+            
+        }
+        .accentColor(.black)
+      
         
         
     }

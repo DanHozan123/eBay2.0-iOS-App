@@ -6,28 +6,19 @@
 //
 
 import SwiftUI
+import Kingfisher
 
-enum OptionList: String {
-    
-    case EditPorfile = "Edit Profile"
-    case Cart = "Cart"
-    case Favorites = "Favorites"
-    case History = "Purchase History"
-    case TermsOfService = "Terms of Service"
-    case SuspendAccount = "Suspend Account"
-    case DeleteAccount = "Delete Account"
-}
 
 struct ProfileView: View {
     
     @State private var isShowingAuthentificationForm = false
-    @StateObject var viewModel: ProfileViewModel
     
+    @StateObject var viewModel: ProfileViewModel
     
     init(user: User?) {
         self._viewModel = StateObject(wrappedValue: ProfileViewModel(user: user))
     }
-    
+
     var body: some View {
         
         NavigationStack {
@@ -70,7 +61,7 @@ struct ProfileView: View {
                 ToolbarItem(placement: .navigationBarLeading) {
                     if let user = viewModel.user {
                         if let imageLink = user.profileImageLink {
-                            Image(imageLink)
+                            KFImage(URL(string: imageLink))
                                 .resizable()
                                 .scaledToFill()
                                 .frame(width: 40, height: 40)
@@ -144,7 +135,6 @@ struct InactiveButtonsExtractedView: View {
 struct ProfileView_Previews: PreviewProvider {
     static var previews: some View {
         ProfileView(user: User.MOCK_DATA)
-        //ProfileView(user: nil)
     }
 }
 

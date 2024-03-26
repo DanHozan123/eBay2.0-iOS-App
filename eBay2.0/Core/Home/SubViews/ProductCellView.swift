@@ -58,7 +58,7 @@ struct ProductCellView: View {
                 }
                 Spacer()
             }
-            .frame(width: .infinity, height: dimension)
+            .frame(height: dimension)
             Divider()
         }
         

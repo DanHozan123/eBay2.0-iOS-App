@@ -9,6 +9,18 @@ import Foundation
 import FirebaseAuth
 import Combine
 
+
+
+class ProfileUpdate {
+    
+    static let shared = ProfileUpdate()
+    
+    let changedUser = PassthroughSubject<User, Never>()
+    
+    private init() {}
+}
+
+
 class TabBarViewViewModel: ObservableObject {
     
     
@@ -22,6 +34,8 @@ class TabBarViewViewModel: ObservableObject {
     }
     
     func setupSubscribers() {
+        
+        // Authentification
         AuthentificationService.shared.$userSession.sink { [weak self] userSession in
             self?.userSession = userSession
         }
@@ -32,6 +46,21 @@ class TabBarViewViewModel: ObservableObject {
         }
         .store(in: &cancellables)
         
+        
+        //Profile
+        ProfileUpdate.shared.changedUser.sink { [weak self] user in
+                self?.currentUser = user
+        }
+        .store(in: &cancellables)
+        
+        
     }
+    
+
+
+    
+
+    
+    
     
 }

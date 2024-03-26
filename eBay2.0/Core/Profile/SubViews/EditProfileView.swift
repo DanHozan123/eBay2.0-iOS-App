@@ -7,40 +7,42 @@
 
 import SwiftUI
 import PhotosUI
+import Kingfisher
 
 struct EditProfileView: View {
     
-    @State private var imagePickerPresented = false
-    @StateObject var viewModel: EditProfileViewModel
     @Environment(\.presentationMode) var presentationMode
 
+    @State private var imagePickerPresented = false
+    @StateObject var viewModel: EditProfileViewModel
     
     init(user: User) {
         self._viewModel = StateObject(wrappedValue: EditProfileViewModel(user: user))
+      
     }
-    
-  
+
     var body: some View {
         
         VStack(spacing: 20) {
-            
+    
             Button {
                 imagePickerPresented.toggle()
             } label: {
-                if let profileImageLink = viewModel.user.profileImageLink {
-                    Image(profileImageLink)
-                        .resizable()
-                        .scaledToFill()
-                        .frame(width: 84, height: 84)
-                        .clipShape(Circle())
-                } else if let profileImageSelected = viewModel.profileImage {
+                
+                if let profileImageSelected = viewModel.profileImage {
                     profileImageSelected
                         .resizable()
                         .scaledToFill()
                         .frame(width: 84, height: 84)
                         .clipShape(Circle())
                 }
-                else {
+                else if let profileImageLink = viewModel.user.profileImageLink {
+                    KFImage(URL(string: profileImageLink))
+                        .resizable()
+                        .scaledToFill()
+                        .frame(width: 84, height: 84)
+                        .clipShape(Circle())
+                } else {
                     Image(systemName: "plus.circle")
                         .renderingMode(.template)
                         .resizable()
@@ -56,7 +58,7 @@ struct EditProfileView: View {
                     .font(.subheadline)
                     .fontWeight(.medium)
                 
-                TextField(viewModel.user.fullname, text: $viewModel.name)
+                TextField(viewModel.user.fullname, text: $viewModel.profileChangedName)
                     .padding(10)
                     .background(Color(.systemGray6))
                     .cornerRadius(10)
@@ -81,7 +83,7 @@ struct EditProfileView: View {
                         .padding(.vertical, 5)
                         .background(.blue)
                         .foregroundColor(.white)
-                        .cornerRadius(10)
+                        .clipShape(Capsule())
                 }
             }
         }
@@ -93,7 +95,6 @@ struct EditProfileView: View {
 
 struct EditProfileView_Previews: PreviewProvider {
     static var previews: some View {
-        //EditProfileView(user: User.MOCK_DATA)
-        EditProfileView(user: User.MOCK_DATA_NIL_PROFILE)
+        EditProfileView(user: User.MOCK_DATA)
     }
 }
