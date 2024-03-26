@@ -50,7 +50,7 @@ struct RegisterView: View {
                 .frame(maxWidth: .infinity, alignment: .trailing)
                 
                 Button {
-                    if viewModel.formValid {
+                    if viewModel.isFormValid {
                         Task{
                             do {
                                 try await viewModel.registerUser()

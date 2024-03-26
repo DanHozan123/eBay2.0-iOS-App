@@ -7,6 +7,7 @@
 
 import Foundation
 import Firebase
+import FirebaseAuth
 import FirebaseFirestore
 import FirebaseFirestoreSwift
 
@@ -59,7 +60,7 @@ class AuthentificationService {
             print("ERROR: ", error.localizedDescription)
         }
     }
-    
+
     
     func signOut() {
         do {

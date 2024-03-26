@@ -7,10 +7,17 @@
 
 import Foundation
 
+
 class ProfileViewModel: ObservableObject {
     
-    func singOut()  {
-         AuthentificationService.shared.signOut()
+    let user: User?
+    
+    init(user: User?) {
+        self.user = user
+    }
+    
+    func signOut() {
+        AuthentificationService.shared.signOut()
     }
     
 }

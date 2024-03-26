@@ -15,7 +15,7 @@ class LoginViewModel: ObservableObject {
     
     var authService = AuthentificationService.shared
     
-    var formValid: Bool {
+    var isFormValid: Bool {
         return email != "" && password != ""
     }
     

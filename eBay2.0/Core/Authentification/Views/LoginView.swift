@@ -39,7 +39,7 @@ struct LoginView: View {
                 
                 Button{
                     Task {
-                        if viewModel.formValid {
+                        if viewModel.isFormValid {
                             do {
                                 try await viewModel.login()
                                 isShowingAuthentificationForm.toggle()

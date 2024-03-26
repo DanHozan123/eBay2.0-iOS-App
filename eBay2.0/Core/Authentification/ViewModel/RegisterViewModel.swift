@@ -16,7 +16,7 @@ class RegisterViewModel: ObservableObject {
     
     var authService = AuthentificationService.shared
     
-    var formValid: Bool {
+    var isFormValid: Bool {
         return email != "" && fullname != "" && password != ""
     }
     

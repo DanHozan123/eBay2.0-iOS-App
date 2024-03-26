@@ -16,17 +16,17 @@ enum OptionList: String {
     case TermsOfService = "Terms of Service"
     case SuspendAccount = "Suspend Account"
     case DeleteAccount = "Delete Account"
-    
 }
-
 
 struct ProfileView: View {
     
     @State private var isShowingAuthentificationForm = false
-    @StateObject var viewModel = ProfileViewModel()
+    @StateObject var viewModel: ProfileViewModel
     
-    let user: User?
     
+    init(user: User?) {
+        self._viewModel = StateObject(wrappedValue: ProfileViewModel(user: user))
+    }
     
     var body: some View {
         
@@ -34,9 +34,9 @@ struct ProfileView: View {
             HStack {
                 VStack(alignment: .leading, spacing: 10) {
                     
-                    if let _ = user {
+                    if let user = viewModel.user {
                         Group {
-                            NavigationLink(destination: EditProfileView(), label: { Text("EditProfile") })
+                            NavigationLink(destination: EditProfileView(user: user), label: { Text("Edit Profile") })
                             Text("Cart")
                             Text("Favorites")
                             Text("Purchase History")
@@ -62,55 +62,54 @@ struct ProfileView: View {
                     
                 }
                 .padding(.top, 10)
-                .toolbar {
-                    ToolbarItem(placement: .navigationBarLeading) {
-                        if let user = user {
-                            if let imageLink = user.profileImageLink {
-                                Image(imageLink)
-                                    .resizable()
-                                    .scaledToFill()
-                                    .frame(width: 40, height: 40)
-                                    .clipShape(Circle())
-                            }
-                            else {
-                                Image(systemName: "person")
-                                    .font(.title2)
-                            }
-                            
-                        } else {
-                            Image(systemName: "person")
-                                .font(.title2)
-                                
-                        }
-                    }
-                    
-                    ToolbarItem(placement: .navigationBarTrailing) {
-                        if let _ = user {
-                            Button {
-                                viewModel.singOut()
-                            } label: {
-                                Text("Sign Out")
-                                    .font(.subheadline)
-                                    .fontWeight(.semibold)
-                                    .foregroundColor(.red)
-                            }
-                        } else {
-                            Button {
-                                isShowingAuthentificationForm.toggle()
-                            } label: {
-                                Text("Sign In")
-                                    .font(.subheadline)
-                                    .fontWeight(.semibold)
-                                    .foregroundColor(.red)
-                            }
-                        }
-                    }
-                }
-                .navigationTitle(user?.fullname ?? "Guest User")
                 .padding(.leading, 20)
                 Spacer()
                 
             }
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    if let user = viewModel.user {
+                        if let imageLink = user.profileImageLink {
+                            Image(imageLink)
+                                .resizable()
+                                .scaledToFill()
+                                .frame(width: 40, height: 40)
+                                .clipShape(Circle())
+                        } else {
+                            Image(systemName: "person")
+                                .font(.title2)
+                        }
+                        
+                    } else {
+                        Image(systemName: "person")
+                            .font(.title2)
+                            
+                    }
+                }
+                
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    if let _ = viewModel.user {
+                        Button {
+                            viewModel.signOut()
+                        } label: {
+                            Text("Sign Out")
+                                .font(.subheadline)
+                                .fontWeight(.semibold)
+                                .foregroundColor(.red)
+                        }
+                    } else {
+                        Button {
+                            isShowingAuthentificationForm.toggle()
+                        } label: {
+                            Text("Sign In")
+                                .font(.subheadline)
+                                .fontWeight(.semibold)
+                                .foregroundColor(.red)
+                        }
+                    }
+                }
+            }
+            .navigationTitle(viewModel.user?.fullname ?? "Guest User")
             .fullScreenCover(isPresented: $isShowingAuthentificationForm) {
                 LoginView(isShowingAuthentificationForm: $isShowingAuthentificationForm)
             }

@@ -10,6 +10,7 @@ import Firebase
 
 class UserService {
     
+    @MainActor
     static func fetchUser(withUid id: String) async -> User? {
         do {
             let snapshot = try await FirebaseReferenceCollection(collectionReferance: .users).document(id).getDocument()
