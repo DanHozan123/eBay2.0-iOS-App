@@ -10,11 +10,12 @@ import Foundation
 import Foundation
 import FirebaseFirestore
 
-enum FirebaseReferanceCollection: String {
+enum FirebaseCollection: String {
     case users
+    case products
 }
 
 
-func FirebaseReferenceCollection(collectionReferance: FirebaseReferanceCollection) -> CollectionReference {
+func FirebaseReferenceCollection(collectionReferance: FirebaseCollection) -> CollectionReference {
     return Firestore.firestore().collection(collectionReferance.rawValue)
 }

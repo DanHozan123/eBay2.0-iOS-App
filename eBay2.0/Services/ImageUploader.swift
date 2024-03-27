@@ -9,16 +9,22 @@
 import FirebaseStorage
 import UIKit
 
+enum ImagePath: String {
+    case profile_images
+    case products_images
+}
+
+
 struct ImageUploader {
     
-    static func uploadImage(image: UIImage) async -> String? {
+    static func uploadImage(image: UIImage, imagePath: ImagePath) async -> String? {
         
         guard let imageData = image.jpegData(compressionQuality: 0.5) else {
             return nil
         }
         
         let imageName = UUID().uuidString
-        let ref = Storage.storage().reference().child("profile_images").child(imageName)
+        let ref = Storage.storage().reference().child(imagePath.rawValue).child(imageName)
         
         do {
             let _ = try await ref.putDataAsync(imageData)

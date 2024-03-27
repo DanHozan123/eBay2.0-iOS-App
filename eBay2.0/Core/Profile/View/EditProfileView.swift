@@ -78,16 +78,10 @@ struct EditProfileView: View {
                         presentationMode.wrappedValue.dismiss()
                     }
                 } label: {
-                    Text("Done")
-                        .padding(.horizontal)
-                        .padding(.vertical, 5)
-                        .background(.blue)
-                        .foregroundColor(.white)
-                        .clipShape(Capsule())
+                    DoneButton()
                 }
             }
         }
-
         .photosPicker(isPresented: $imagePickerPresented, selection: $viewModel.selectedImage)
 
     }

@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 struct ProductCellView: View {
     
@@ -15,7 +16,7 @@ struct ProductCellView: View {
     var body: some View {
         VStack {
             HStack {
-                Image(product.productImageLink)
+                KFImage(URL(string: product.productImageLink))
                     .resizable()
                     .scaledToFill()
                     .frame(width: dimension, height: dimension)
