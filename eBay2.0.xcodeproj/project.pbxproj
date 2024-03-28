@@ -45,6 +45,9 @@
 		0EA052CF2BB1CD19001971C7 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 0EA052CE2BB1CD19001971C7 /* FirebaseFirestore */; };
 		0EA052D12BB1CD19001971C7 /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 0EA052D02BB1CD19001971C7 /* FirebaseFirestoreSwift */; };
 		0EA052D32BB1CD19001971C7 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 0EA052D22BB1CD19001971C7 /* FirebaseStorage */; };
+		0EAB1A622BB57F4A00C643E8 /* ProductCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EAB1A612BB57F4A00C643E8 /* ProductCellViewModel.swift */; };
+		0EAB1A642BB5818F00C643E8 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EAB1A632BB5818F00C643E8 /* Constants.swift */; };
+		0EAB1A662BB58ECD00C643E8 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EAB1A652BB58ECD00C643E8 /* SearchViewModel.swift */; };
 		0EE614F42BB4739D001269C7 /* ProductDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EE614F32BB4739D001269C7 /* ProductDetailViewModel.swift */; };
 /* End PBXBuildFile section */
 
@@ -83,6 +86,9 @@
 		0E60EC162BACB58E000C8D20 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		0E60EC182BACB59B000C8D20 /* RegisterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterView.swift; sourceTree = "<group>"; };
 		0EA052C62BB1C004001971C7 /* ImageUploader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageUploader.swift; sourceTree = "<group>"; };
+		0EAB1A612BB57F4A00C643E8 /* ProductCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductCellViewModel.swift; sourceTree = "<group>"; };
+		0EAB1A632BB5818F00C643E8 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		0EAB1A652BB58ECD00C643E8 /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
 		0EE614F32BB4739D001269C7 /* ProductDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -215,6 +221,7 @@
 			isa = PBXGroup;
 			children = (
 				0E2D468C2BAC4AA900593FF2 /* SearchView.swift */,
+				0EAB1A652BB58ECD00C643E8 /* SearchViewModel.swift */,
 			);
 			path = Search;
 			sourceTree = "<group>";
@@ -266,6 +273,7 @@
 			isa = PBXGroup;
 			children = (
 				0E1D20952BADA8AA00450D8B /* FirebaseCollection.swift */,
+				0EAB1A632BB5818F00C643E8 /* Constants.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -276,6 +284,7 @@
 				0E5036642BB321B7001384B9 /* ProductsViewModel.swift */,
 				0EE614F32BB4739D001269C7 /* ProductDetailViewModel.swift */,
 				0E5036682BB3221A001384B9 /* AddProductViewModel.swift */,
+				0EAB1A612BB57F4A00C643E8 /* ProductCellViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -411,6 +420,7 @@
 			files = (
 				0E60EC132BACB26D000C8D20 /* EditProfileView.swift in Sources */,
 				0E1D20842BAD9DBF00450D8B /* RegisterViewModel.swift in Sources */,
+				0EAB1A622BB57F4A00C643E8 /* ProductCellViewModel.swift in Sources */,
 				0EA052C72BB1C004001971C7 /* ImageUploader.swift in Sources */,
 				0E60EC102BAC9797000C8D20 /* User.swift in Sources */,
 				0E2D469D2BAC578900593FF2 /* ProductsView.swift in Sources */,
@@ -422,6 +432,7 @@
 				0E2D46902BAC4B0200593FF2 /* FavoritesView.swift in Sources */,
 				0E5036652BB321B7001384B9 /* ProductsViewModel.swift in Sources */,
 				0E1D20822BAD822A00450D8B /* TextFieldCustom.swift in Sources */,
+				0EAB1A662BB58ECD00C643E8 /* SearchViewModel.swift in Sources */,
 				0E2D468D2BAC4AA900593FF2 /* SearchView.swift in Sources */,
 				0E2D46A12BAC580C00593FF2 /* ProductCellView.swift in Sources */,
 				0E1D20872BAD9FE600450D8B /* AuthentificationService.swift in Sources */,
@@ -431,6 +442,7 @@
 				0E5036672BB321EB001384B9 /* AddProductView.swift in Sources */,
 				0E5036692BB3221A001384B9 /* AddProductViewModel.swift in Sources */,
 				0E2D46962BAC4B5E00593FF2 /* ProfileView.swift in Sources */,
+				0EAB1A642BB5818F00C643E8 /* Constants.swift in Sources */,
 				0E2D468B2BAC4A9C00593FF2 /* HomeView.swift in Sources */,
 				0E1D20982BADC5A200450D8B /* UserService.swift in Sources */,
 				0E2D469F2BAC57A700593FF2 /* ProductDetailView.swift in Sources */,

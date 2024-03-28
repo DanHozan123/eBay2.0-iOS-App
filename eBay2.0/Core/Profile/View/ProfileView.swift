@@ -59,23 +59,18 @@ struct ProfileView: View {
             }
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
-                    if let user = viewModel.user {
-                        if let imageLink = user.profileImageLink {
-                            KFImage(URL(string: imageLink))
-                                .resizable()
-                                .scaledToFill()
-                                .frame(width: 40, height: 40)
-                                .clipShape(Circle())
-                        } else {
-                            Image(systemName: "person")
-                                .font(.title2)
-                        }
-                        
+                    
+                    if let imageLink = viewModel.user?.profileImageLink, let url = URL(string: imageLink) {
+                        KFImage(url)
+                            .resizable()
+                            .scaledToFill()
+                            .frame(width: 40, height: 40)
+                            .clipShape(Circle())
                     } else {
                         Image(systemName: "person")
                             .font(.title2)
-                            
                     }
+                    
                 }
                 
                 ToolbarItem(placement: .navigationBarTrailing) {

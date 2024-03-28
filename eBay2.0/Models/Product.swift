@@ -18,7 +18,6 @@ struct Product: Codable, Identifiable {
     let timestamp: Date
     let category: ProductCategory
     
-    
     var formattedPrice: String {
         let formatter = NumberFormatter()
         formatter.numberStyle = .currency

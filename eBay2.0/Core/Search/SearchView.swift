@@ -9,19 +9,28 @@ import SwiftUI
 
 struct SearchView: View {
     
-    var user: User?
+    @State private var searchText = ""
+    @StateObject var viewModel = SearchViewModel()
     
     var body: some View {
         
-        VStack{
-            Text(user?.fullname ?? "Guest User")
+        NavigationView {
+            ScrollView {
+                LazyVStack {
+                    ForEach(searchText.isEmpty ? viewModel.products: viewModel.fetchProducts(inputSearchbar: searchText)) { product in
+                        NavigationLink(destination: ProductDetailView(product: product), label: { ProductCellView(product: product) })
+                    }
+                }
+                .navigationTitle("Explore")
+                .navigationBarTitleDisplayMode(.inline)
+                .searchable(text: $searchText, prompt: "Search...")
+            }
         }
-        
     }
 }
 
 struct SearchView_Previews: PreviewProvider {
     static var previews: some View {
-        SearchView(user: User.MOCK_DATA)
+        SearchView()
     }
 }

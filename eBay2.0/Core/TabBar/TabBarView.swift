@@ -24,7 +24,7 @@ struct TabBarView: View {
                }
                .tag(0)
 
-            SearchView(user: viewModel.currentUser)
+            SearchView()
                .tabItem {
                  Image(systemName: "magnifyingglass")
                }

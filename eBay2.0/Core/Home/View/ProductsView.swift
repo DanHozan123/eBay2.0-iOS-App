@@ -22,7 +22,7 @@ struct ProductsView: View {
     
     var body: some View {
         ScrollView {
-            VStack{
+            LazyVStack{
                 ForEach(viewModel.products){ product in
                     NavigationLink(destination: ProductDetailView(product: product), label: { ProductCellView(product: product) })
                     

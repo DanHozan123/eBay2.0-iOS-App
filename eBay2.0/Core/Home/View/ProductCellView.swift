@@ -10,13 +10,18 @@ import Kingfisher
 
 struct ProductCellView: View {
     
-    let product: Product
     private let dimension = (UIScreen.main.bounds.width / 2.5)
-
+    
+    @StateObject var viewModel: ProductCellViewModel
+    
+    init(product: Product){
+        self._viewModel = StateObject(wrappedValue: ProductCellViewModel(product: product))
+    }
+    
     var body: some View {
         VStack {
             HStack {
-                KFImage(URL(string: product.productImageLink))
+                KFImage(URL(string: viewModel.product.productImageLink))
                     .resizable()
                     .scaledToFill()
                     .frame(width: dimension, height: dimension)
@@ -26,7 +31,7 @@ struct ProductCellView: View {
                     
                     Spacer()
                     
-                    Text(product.title)
+                    Text(viewModel.product.title)
                         .font(.title3)
                         .fontWeight(.semibold)
                         .multilineTextAlignment(.leading)
@@ -34,7 +39,7 @@ struct ProductCellView: View {
                     
                     Spacer()
                     
-                    Text(product.condition)
+                    Text(viewModel.product.condition)
                         .font(.subheadline)
                         .textCase(.uppercase)
                         .foregroundColor(.gray)
@@ -42,20 +47,26 @@ struct ProductCellView: View {
                     Spacer()
                     
                     HStack {
-                        Text(product.formattedPrice)
+                        Text(viewModel.product.formattedPrice)
                             .font(.title)
                         
                         Spacer()
                         
                         Button {
-                            print("favorites")
+                            Task {
+                                if viewModel.isAddedToFavorites {
+                                    await viewModel.removeFromFavorites()
+                                } else {
+                                    await viewModel.addToFavorites()
+                                }
+                            }
                         } label: {
-                            Image(systemName: "heart")
+                            Image(systemName: viewModel.isAddedToFavorites ? "heart.fill" : "heart" )
                                 .tint(.black)
                         }
                     }
                     Spacer()
-                        
+                    
                 }
                 Spacer()
             }

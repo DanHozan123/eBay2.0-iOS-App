@@ -34,7 +34,6 @@ struct AddProductView: View {
                         .resizable()
                         .scaledToFit()
                         .frame(width: dimension, height: dimension)
-                        .background(Color(.systemGray6))
                         .cornerRadius(10)
                         .padding(.bottom)
                 }

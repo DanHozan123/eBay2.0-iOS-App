@@ -28,16 +28,15 @@ struct ProductDetailView: View {
                     .resizable()
                     .scaledToFit()
                     .frame(width: dimension, height: dimension)
-                    .background(Color(.systemGray6))
                     .cornerRadius(10)
                     .padding(.bottom)
                 
                 VStack(alignment: .leading, spacing: 10) {
-                    
+
                     Text(viewModel.product.title)
                         .font(.title3)
                         .fontWeight(.semibold)
-                    
+          
                     HStack() {
                         KFImage(URL(string: viewModel.productOwner?.profileImageLink ?? ""))
                             .resizable()
@@ -48,24 +47,29 @@ struct ProductDetailView: View {
                         Text(viewModel.productOwner?.fullname ?? "")
                             .fontWeight(.semibold)
                     }
-                    
+           
+
                     HStack() {
                         Text("Condition:")
                             .fontWeight(.semibold)
                         Text(viewModel.product.condition)
                     }
-                    
+                
                     HStack() {
                         Text("Price:")
                             .fontWeight(.semibold)
                         Text(viewModel.product.formattedPrice)
                     }
-                    
+                    Divider()
+
                     VStack(alignment: .leading) {
                         Text("Fetures:")
                             .fontWeight(.semibold)
                         Text(viewModel.product.features)
                     }
+                    
+                    Divider()
+
                     
                     
                 }
