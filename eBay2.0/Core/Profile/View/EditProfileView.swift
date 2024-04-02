@@ -11,9 +11,9 @@ import Kingfisher
 
 struct EditProfileView: View {
     
-    @Environment(\.presentationMode) var presentationMode
-
     @State private var imagePickerPresented = false
+    
+    @Environment(\.presentationMode) var presentationMode
     @StateObject var viewModel: EditProfileViewModel
     
     init(user: User) {

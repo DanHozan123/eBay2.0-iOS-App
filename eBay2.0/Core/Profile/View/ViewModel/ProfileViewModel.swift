@@ -11,10 +11,11 @@ import Combine
 
 class ProfileViewModel: ObservableObject {
     
+    private var cancellables = Set<AnyCancellable>()
+    private let userDataManager = UserDataManager.shared
     
     @Published var user: User?
     
-    private var cancellables = Set<AnyCancellable>()
     
     init(user: User?) {
         self.user = user
@@ -22,7 +23,9 @@ class ProfileViewModel: ObservableObject {
     }
     
     func setupSubscribers() {
-        ProfileUpdate.shared.changedUser.sink { [weak self] user in
+        userDataManager.$currentUser
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] user in
             self?.user = user
         }
         .store(in: &cancellables)
@@ -31,6 +34,7 @@ class ProfileViewModel: ObservableObject {
     
     func signOut() {
         AuthentificationService.shared.signOut()
+        userDataManager.currentUser = nil
     }
     
     

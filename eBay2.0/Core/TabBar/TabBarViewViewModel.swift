@@ -10,49 +10,31 @@ import FirebaseAuth
 import Combine
 
 
-
-class ProfileUpdate {
-    
-    static let shared = ProfileUpdate()
-    
-    let changedUser = PassthroughSubject<User, Never>()
-    
-    private init() {}
-}
-
-
 class TabBarViewViewModel: ObservableObject {
     
-    
-    private var cancellables = Set<AnyCancellable>()
-    
-    @Published var userSession: FirebaseAuth.User?
     @Published var currentUser: User?
     
+    private let authService = AuthentificationService.shared
+    private let userDataManager = UserDataManager.shared
+    
+    private var bag = Set<AnyCancellable>()
+    
     init() {
+        Task {
+            guard let uid = Auth.auth().currentUser?.uid else { return }
+            let user = await UserService.fetchUser(withUid: uid)
+            userDataManager.currentUser = user
+        }
         setupSubscribers()
     }
     
     func setupSubscribers() {
-        
-        // Authentification
-        AuthentificationService.shared.$userSession.sink { [weak self] userSession in
-            self?.userSession = userSession
-        }
-        .store(in: &cancellables)
-        
-        AuthentificationService.shared.$currentUser.sink { [weak self] currentUser in
+        UserDataManager.shared.$currentUser
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] currentUser in
             self?.currentUser = currentUser
         }
-        .store(in: &cancellables)
-        
-        
-        //Profile
-        ProfileUpdate.shared.changedUser.sink { [weak self] user in
-                self?.currentUser = user
-        }
-        .store(in: &cancellables)
-        
+        .store(in: &bag)
         
     }
     

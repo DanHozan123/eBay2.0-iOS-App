@@ -13,19 +13,20 @@ import FirebaseFirestoreSwift
 
 class AddProductViewModel: ObservableObject {
     
-    
-    @Published var selectedImage: PhotosPickerItem? {
-        didSet { Task { await loadImage(fromItem: selectedImage)} }
-    }
-    @Published var productImage: Image?
     private var uiImage: UIImage?
+    private let productDataManager = ProductDataManager.shared
     
+    @Published var productImage: Image?
     @Published var title = ""
     @Published var condition = ""
     @Published var price = ""
     @Published var features = ""
     
-    var formValidation: Bool{
+    @Published var selectedImage: PhotosPickerItem? {
+        didSet { Task { await loadImage(fromItem: selectedImage)} }
+    }
+    
+    var formValidation: Bool {
         return title != "" && condition != "" && price != "" && features != "" && uiImage != nil
     }
     
@@ -43,7 +44,7 @@ class AddProductViewModel: ObservableObject {
     func uploadProduct(productCategory: ProductCategory) async {
         do {
             guard let uiImage = self.uiImage else { return }
-            let imageLink = await ImageUploader.uploadImage(image: uiImage, imagePath: .products_images)
+            let imageLink = await ImageService.uploadImage(image: uiImage, imagePath: .products_images)
             guard let imageProductLink = imageLink else { return }
             
             guard let ownerId = Auth.auth().currentUser?.uid else { return }
@@ -52,8 +53,10 @@ class AddProductViewModel: ObservableObject {
             let product = Product(id: productId, ownerId: ownerId, title: title, condition: condition, price: (Float(price) ?? 0.0), features: features, productImageLink: imageProductLink, timestamp: Date(), category: productCategory)
             guard let encodedProduct = try? Firestore.Encoder().encode(product) else { return }
             
+            
             try await FirebaseReferenceCollection(collectionReferance: .products).document(productId).setData(encodedProduct)
-            ProductAdded.shared.addedProductToList.send(true)
+            productDataManager.addProductToCurrentCategoryFiltredProducts(product: product)
+            
             
         } catch {
             print("ERROR: ", error.localizedDescription)

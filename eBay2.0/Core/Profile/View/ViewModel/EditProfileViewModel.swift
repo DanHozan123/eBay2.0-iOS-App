@@ -11,15 +11,16 @@ import SwiftUI
  
 class EditProfileViewModel: ObservableObject {
     
-    @Published var user: User
+    private let userDataManager = UserDataManager.shared
+    private var uiImage: UIImage?
     
-    @Published var profileChangedName = ""
     @Published var selectedImage: PhotosPickerItem? {
         didSet { Task { await loadImage(fromItem: selectedImage)} }
     }
+    @Published var user: User
+    @Published var profileChangedName = ""
     @Published var profileImage: Image?
-    private var uiImage: UIImage?
- 
+
     
     init(user: User) {
         self.user = user
@@ -42,7 +43,7 @@ class EditProfileViewModel: ObservableObject {
             var data = [String: Any]()
             
             if let uiImage = uiImage {
-                let imageUrl = await ImageUploader.uploadImage(image: uiImage, imagePath: ImagePath.profile_images)
+                let imageUrl = await ImageService.uploadImage(image: uiImage, imagePath: ImagePath.profile_images)
                 data["profileImageLink"] = imageUrl
                 self.user.profileImageLink = imageUrl
             }
@@ -52,10 +53,11 @@ class EditProfileViewModel: ObservableObject {
                 self.user.fullname = profileChangedName
             }
             
-            if data.isEmpty == false {
+            if !data.isEmpty {
                 try await FirebaseReferenceCollection(collectionReferance: .users).document(user.id).updateData(data)
+                userDataManager.currentUser = user
             }
-            ProfileUpdate.shared.changedUser.send(self.user)
+            
             
         }
         catch{

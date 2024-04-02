@@ -6,20 +6,23 @@
 //
 
 import Foundation
-
+import FirebaseAuth
 
 class LoginViewModel: ObservableObject {
     
+    private let userDataManager = UserDataManager.shared
+    private let authService = AuthentificationService.shared
+    
     @Published var email: String = ""
     @Published var password: String = ""
-    
-    var authService = AuthentificationService.shared
     
     var isFormValid: Bool {
         return email != "" && password != ""
     }
     
     func login() async throws {
-        try await authService.loginUser(withEmail: email, password: password)
+        let result = try await authService.loginUser(withEmail: email, password: password)
+        let user = await UserService.fetchUser(withUid: result.user.uid)
+        userDataManager.currentUser = user
     }
 }

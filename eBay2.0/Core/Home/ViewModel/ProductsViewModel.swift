@@ -23,36 +23,34 @@ class ProductAdded {
 class ProductsViewModel: ObservableObject {
     
     
-    @Published var products = [Product]()
+    private var bag = Set<AnyCancellable>()
+    private let category: Category
+    private let productDataManager = ProductDataManager.shared
     
-    private var cancellables = Set<AnyCancellable>()
-    private var category: Category
+    @Published var products =  [Product]()
     
+
     init(category: Category){
         self.category = category
         Task {
-            await fetchProducts()
+            await fetchProductsWithCategory()
         }
         setupSubscribers()
     }
     
+    
     func setupSubscribers() {
-        ProductAdded.shared.addedProductToList.sink { [weak self] productAdded in
-            guard let self = self else { return }
-            if productAdded {
-                Task {
-                    await self.fetchProducts()
-                }
-                ProductAdded.shared.addedProductToList.send(false)
-            }
+        productDataManager.$currentCategoryFiltredProducts
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] products in
+            self?.products = products
         }
-        .store(in: &cancellables)
+        .store(in: &bag)
     }
 
     
-    
     @MainActor
-    func fetchProducts() async{
+    func fetchProductsWithCategory() async {
         do {
             
             let querySnapshot = try await FirebaseReferenceCollection(collectionReferance: .products)
@@ -60,7 +58,7 @@ class ProductsViewModel: ObservableObject {
                 .getDocuments()
             
             let products = querySnapshot.documents.compactMap({ try? $0.data(as: Product.self) })
-            self.products = products
+            productDataManager.currentCategoryFiltredProducts = products
         } catch {
             print("ERROR: ", error.localizedDescription)
         }

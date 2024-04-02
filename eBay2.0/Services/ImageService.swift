@@ -15,7 +15,7 @@ enum ImagePath: String {
 }
 
 
-struct ImageUploader {
+struct ImageService {
     
     static func uploadImage(image: UIImage, imagePath: ImagePath) async -> String? {
         

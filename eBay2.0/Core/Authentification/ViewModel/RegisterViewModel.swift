@@ -14,14 +14,16 @@ class RegisterViewModel: ObservableObject {
     @Published var fullname: String = ""
     @Published var password: String = ""
     
-    var authService = AuthentificationService.shared
+    private let authService = AuthentificationService.shared
+    private let userDataManager = UserDataManager.shared
     
     var isFormValid: Bool {
         return email != "" && fullname != "" && password != ""
     }
     
     func registerUser() async throws {
-        try await authService.createUser(withEmail: email, fullname: fullname, password: password)
+        let user = try await authService.createUser(withEmail: email, fullname: fullname, password: password)
+        userDataManager.currentUser = user
     }
     
     
