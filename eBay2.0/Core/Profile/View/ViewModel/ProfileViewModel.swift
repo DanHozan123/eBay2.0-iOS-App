@@ -16,7 +16,6 @@ class ProfileViewModel: ObservableObject {
     
     @Published var user: User?
     
-    
     init(user: User?) {
         self.user = user
         setupSubscribers()
@@ -33,7 +32,7 @@ class ProfileViewModel: ObservableObject {
     
     
     func signOut() {
-        AuthentificationService.shared.signOut()
+        AuthentificationService.signOut()
         userDataManager.currentUser = nil
     }
     

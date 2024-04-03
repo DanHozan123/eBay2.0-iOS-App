@@ -14,7 +14,6 @@ class RegisterViewModel: ObservableObject {
     @Published var fullname: String = ""
     @Published var password: String = ""
     
-    private let authService = AuthentificationService.shared
     private let userDataManager = UserDataManager.shared
     
     var isFormValid: Bool {
@@ -22,7 +21,7 @@ class RegisterViewModel: ObservableObject {
     }
     
     func registerUser() async throws {
-        let user = try await authService.createUser(withEmail: email, fullname: fullname, password: password)
+        let user = try await AuthentificationService.createUser(withEmail: email, fullname: fullname, password: password)
         userDataManager.currentUser = user
     }
     

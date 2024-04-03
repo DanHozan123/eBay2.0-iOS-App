@@ -11,7 +11,6 @@ import FirebaseAuth
 class LoginViewModel: ObservableObject {
     
     private let userDataManager = UserDataManager.shared
-    private let authService = AuthentificationService.shared
     
     @Published var email: String = ""
     @Published var password: String = ""
@@ -21,7 +20,7 @@ class LoginViewModel: ObservableObject {
     }
     
     func login() async throws {
-        let result = try await authService.loginUser(withEmail: email, password: password)
+        let result = try await AuthentificationService.loginUser(withEmail: email, password: password)
         let user = await UserService.fetchUser(withUid: result.user.uid)
         userDataManager.currentUser = user
     }

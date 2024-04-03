@@ -11,12 +11,26 @@ class ProductDataManager {
     
     static let shared = ProductDataManager()
     
+    @Published var allProducts = [Product]()
     @Published var currentCategoryFiltredProducts = [Product]()
-    @Published var addedToFavoritesProducts = [Product]()
+    @Published var addedToFavoritesProducts: Set<Product> = []
+    
+    private init() {
+    }
     
     func addProductToCurrentCategoryFiltredProducts(product: Product) {
         self.currentCategoryFiltredProducts.append(product)
     }
+    
+    func removeAddedToFavoriteProduct(product: Product) {
+        addedToFavoritesProducts.remove(product)
+        print(addedToFavoritesProducts.count)
+    }
+    
+    func addAddedToFavoriteProduct(product: Product) {
+        addedToFavoritesProducts.insert(product)
+        print(addedToFavoritesProducts.count)
+    }
 
-    private init() {}
+    
 }

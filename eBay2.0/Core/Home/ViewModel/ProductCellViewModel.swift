@@ -7,55 +7,53 @@
 
 import Foundation
 import Firebase
+import Combine
 
 class ProductCellViewModel: ObservableObject {
 
+    let productDataManager = ProductDataManager.shared
+    
     @Published var product: Product
     @Published var isAddedToFavorites = false
     
+    private var bag = Set<AnyCancellable>()
+
+    
     init(product: Product) {
         self.product = product
-        Task {
-            await checkIfIsAddedToFavorites()
-        }
+        setupSubscribers()
+
     }
-    
-    @MainActor
-    func checkIfIsAddedToFavorites() async {
-        do {
-            guard let  uid = Auth.auth().currentUser?.uid else { return }
-            let snapshot = try await FirebaseReferenceCollection(collectionReferance: .users).document(uid).collection(USER_PRODUCT_FAVORITES).document(product.id).getDocument()
-            
-            if snapshot.exists {
-                self.isAddedToFavorites = true
+
+    func setupSubscribers() {
+        productDataManager.$addedToFavoritesProducts
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] added in
+                self?.checkIfIsAddedToFavorites()
             }
-        } catch {
-            print("ERROR ", error.localizedDescription)
+            .store(in: &bag)
+        
+    }
+  
+    func checkIfIsAddedToFavorites(){
+        if productDataManager.addedToFavoritesProducts.contains(product) {
+            self.isAddedToFavorites = true
+        } else {
+            self.isAddedToFavorites = false
         }
     }
     
     @MainActor
     func addToFavorites() async {
-        do {
-            guard let  uid = Auth.auth().currentUser?.uid else { return }
-            try await FirebaseReferenceCollection(collectionReferance: .products).document(product.id).collection(PRODUCT_USER_FAVORITES).document(uid).setData([:])
-            try await FirebaseReferenceCollection(collectionReferance: .users).document(uid).collection(USER_PRODUCT_FAVORITES).document(product.id).setData([:])
-            self.isAddedToFavorites = true
-        } catch {
-            print("ERROR ", error.localizedDescription)
-        }
+        await ProductService.addToFavorites(productId: product.id)
+        productDataManager.addAddedToFavoriteProduct(product: product)
+        
     }
     
     @MainActor
     func removeFromFavorites() async {
-        do {
-            guard let  uid = Auth.auth().currentUser?.uid else { return }
-            try await FirebaseReferenceCollection(collectionReferance: .products).document(product.id).collection(PRODUCT_USER_FAVORITES).document(uid).delete()
-            try await FirebaseReferenceCollection(collectionReferance: .users).document(uid).collection(USER_PRODUCT_FAVORITES).document(product.id).delete()
-            self.isAddedToFavorites = false
-        } catch {
-            print("ERROR ", error.localizedDescription)
-        }
+        await ProductService.removeFromFavorites(productId: product.id)
+        productDataManager.removeAddedToFavoriteProduct(product: product)
     }
     
 }

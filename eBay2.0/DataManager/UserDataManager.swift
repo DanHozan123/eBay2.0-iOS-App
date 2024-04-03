@@ -13,6 +13,9 @@ class UserDataManager {
     
     @Published var currentUser: User?
     
+    func setCurrentUser( user: User) {
+        self.currentUser = user
+    }
  
     private init() {}
 }

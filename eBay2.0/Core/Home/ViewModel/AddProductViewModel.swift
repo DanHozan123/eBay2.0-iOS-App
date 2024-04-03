@@ -56,7 +56,7 @@ class AddProductViewModel: ObservableObject {
             
             try await FirebaseReferenceCollection(collectionReferance: .products).document(productId).setData(encodedProduct)
             productDataManager.addProductToCurrentCategoryFiltredProducts(product: product)
-            
+            productDataManager.allProducts.append(product)
             
         } catch {
             print("ERROR: ", error.localizedDescription)

@@ -36,7 +36,9 @@ struct ProductDetailView: View {
                     Text(viewModel.product.title)
                         .font(.title3)
                         .fontWeight(.semibold)
-          
+                    
+                    Divider()
+                    
                     HStack() {
                         KFImage(URL(string: viewModel.productOwner?.profileImageLink ?? ""))
                             .resizable()
@@ -47,8 +49,9 @@ struct ProductDetailView: View {
                         Text(viewModel.productOwner?.fullname ?? "")
                             .fontWeight(.semibold)
                     }
-           
-
+                    
+                    Divider()
+                    
                     HStack() {
                         Text("Condition:")
                             .fontWeight(.semibold)
@@ -60,6 +63,7 @@ struct ProductDetailView: View {
                             .fontWeight(.semibold)
                         Text(viewModel.product.formattedPrice)
                     }
+                    
                     Divider()
 
                     VStack(alignment: .leading) {

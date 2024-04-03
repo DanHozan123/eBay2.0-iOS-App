@@ -6,25 +6,26 @@
 //
 
 import Foundation
-
+import Combine
 
 class SearchViewModel: ObservableObject {
 
+    private var bag = Set<AnyCancellable>()
+    private let productManager = ProductDataManager.shared
     
     @Published var products = [Product]()
     
-    
     init() {
-        Task { await fetchAllProducts() }
+        setupSubscribers()
     }
     
-    @MainActor
-    func fetchAllProducts() async {
-        do {
-            self.products = try await FirebaseReferenceCollection(collectionReferance: .products).getDocuments().documents.compactMap({ try? $0.data(as: Product.self) })
-        } catch {
-            print("ERROR: ", error.localizedDescription)
-        }
+    func setupSubscribers() {
+        productManager.$allProducts
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] allProducts in
+                self?.products = allProducts
+            }
+            .store(in: &bag)
     }
     
     

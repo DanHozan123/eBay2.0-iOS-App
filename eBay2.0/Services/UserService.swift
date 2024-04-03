@@ -8,7 +8,7 @@
 import Foundation
 import Firebase
 
-class UserService {
+struct UserService {
     
     @MainActor
     static func fetchUser(withUid id: String) async -> User? {
@@ -20,4 +20,5 @@ class UserService {
             return nil
         }
     }
+    
 }

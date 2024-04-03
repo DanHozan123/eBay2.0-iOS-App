@@ -10,16 +10,6 @@ import Firebase
 import FirebaseFirestoreSwift
 import Combine
 
-class ProductAdded {
-    
-    static let shared = ProductAdded()
-    
-    let addedProductToList = PassthroughSubject<Bool, Never>()
-    
-    private init() {}
-}
-
-
 class ProductsViewModel: ObservableObject {
     
     

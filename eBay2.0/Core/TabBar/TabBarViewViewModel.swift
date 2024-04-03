@@ -12,18 +12,18 @@ import Combine
 
 class TabBarViewViewModel: ObservableObject {
     
-    @Published var currentUser: User?
     
-    private let authService = AuthentificationService.shared
+    private let prodcutDataManager = ProductDataManager.shared
     private let userDataManager = UserDataManager.shared
-    
     private var bag = Set<AnyCancellable>()
+    
+    @Published var currentUser: User?
+ 
     
     init() {
         Task {
-            guard let uid = Auth.auth().currentUser?.uid else { return }
-            let user = await UserService.fetchUser(withUid: uid)
-            userDataManager.currentUser = user
+            await updateUserDataManager()
+            await updateProductDataManager()
         }
         setupSubscribers()
     }
@@ -38,11 +38,25 @@ class TabBarViewViewModel: ObservableObject {
         
     }
     
+    func updateUserDataManager() async {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        let user = await UserService.fetchUser(withUid: uid)
+        userDataManager.currentUser = user
+    }
 
-
-    
-
-    
+    func updateProductDataManager() async {
+        
+        guard let products = await ProductService.fetchAllProducts() else { return }
+        prodcutDataManager.allProducts = products
+        
+        var addedToFavoritesProduct = Set<Product>()
+        for product in products {
+            if await ProductService.checkIfIsAddedToFavorites(productId: product.id) {
+                addedToFavoritesProduct.insert(product)
+            }
+        }
+        prodcutDataManager.addedToFavoritesProducts = addedToFavoritesProduct
+    }
     
     
 }
