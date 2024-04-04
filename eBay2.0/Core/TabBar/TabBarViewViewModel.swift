@@ -49,10 +49,10 @@ class TabBarViewViewModel: ObservableObject {
         guard let products = await ProductService.fetchAllProducts() else { return }
         prodcutDataManager.allProducts = products
         
-        var addedToFavoritesProduct = Set<Product>()
+        var addedToFavoritesProduct = [Product]()
         for product in products {
             if await ProductService.checkIfIsAddedToFavorites(productId: product.id) {
-                addedToFavoritesProduct.insert(product)
+                addedToFavoritesProduct.append(product)
             }
         }
         prodcutDataManager.addedToFavoritesProducts = addedToFavoritesProduct

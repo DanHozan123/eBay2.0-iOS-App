@@ -13,7 +13,7 @@ class ProductDataManager {
     
     @Published var allProducts = [Product]()
     @Published var currentCategoryFiltredProducts = [Product]()
-    @Published var addedToFavoritesProducts: Set<Product> = []
+    @Published var addedToFavoritesProducts = [Product]()
     
     private init() {
     }
@@ -23,14 +23,14 @@ class ProductDataManager {
     }
     
     func removeAddedToFavoriteProduct(product: Product) {
-        addedToFavoritesProducts.remove(product)
-        print(addedToFavoritesProducts.count)
+        if let index = addedToFavoritesProducts.firstIndex(of: product) {
+            addedToFavoritesProducts.remove(at: index)
+        }
     }
     
     func addAddedToFavoriteProduct(product: Product) {
-        addedToFavoritesProducts.insert(product)
-        print(addedToFavoritesProducts.count)
+        addedToFavoritesProducts.append(product)
     }
-
+    
     
 }
